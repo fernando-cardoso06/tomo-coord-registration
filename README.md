@@ -1,17 +1,17 @@
 # Registro de coordenadas entre aquisições tomográficas
 
-Parte do meu projeto de iniciação científica no IFUSP (Machine Learning
-aplicado a imagens médicas), este repositório isola o pipeline de
-carregamento de imagens DICOM e de registro de coordenadas usado para
-localizar nódulos de um phantom de calibração de forma consistente entre
-diferentes aquisições tomográficas.
+Parte do meu projeto de iniciação científica no IFUSP (Uso de Aprendizado
+de Máquina em Áreas Interdisciplinares Relacionadas à Saúde), este repositório 
+isola o pipeline de carregamento de imagens DICOM e de registro de coordenadas
+usado para localizar nódulos de um phantom de calibração de forma consistente
+entre diferentes aquisições tomográficas.
 
 ## O problema
 
-Um phantom de calibração — com nódulos esféricos em posições conhecidas —
-é escaneado repetidas vezes, sendo girado em seu suporte entre alguns dos
-escaneamentos. Cada nova aquisição tem sua própria origem espacial e, por
-causa da rotação, um deslocamento angular em relação às posições já
+Um phantom de calibração com nódulos esféricos em posições conhecidas
+é escaneado repetidas vezes, sendo girado em seu suporte entre algumas das
+aquisições. Cada scan novo tem sua própria origem espacial e também,
+devido à rotação, um deslocamento angular em relação às posições já
 conhecidas dos nódulos. O metadado de posicionamento do equipamento nem
 sempre é confiável o suficiente para recuperar esse deslocamento sozinho.
 
@@ -35,10 +35,9 @@ notebooks/
 ## Sobre os dados
 
 As tomografias reais deste projeto ficam em um cluster institucional com
-acesso restrito (dados de posicionamento de exame, sujeitos à política de
-acesso do departamento) e não podem ser publicadas aqui. Para que o
+acesso restrito e não podem ser publicadas aqui. Para que o
 pipeline seja executável e revisável publicamente, o notebook de
-demonstração roda sobre um **volume sintético** — um phantom cilíndrico
+demonstração roda sobre um volume sintético: um phantom cilíndrico
 simples com nódulos esféricos e ruído, gerado em memória por
 `dados_sinteticos.py`. A lógica de carregamento e registro é exatamente a
 mesma usada com dados reais; apenas a origem do volume muda.
@@ -46,9 +45,10 @@ mesma usada com dados reais; apenas a origem do volume muda.
 ## Resultado no pipeline real
 
 Otimizando o carregamento DICOM com leitura paralela de headers e pixels
-(`dicom_io.carregar_serie_dicom`), o tempo de processamento de um exame de
-referência com 2.915 imagens caiu de ~170s para ~105s — uma redução de
-~38% — em comparação com uma versão sequencial do mesmo carregamento.
+(com uso da função `dicom_io.carregar_serie_dicom`), o tempo de processamento
+de um exame de referência com 2.915 imagens caiu de ~170s para ~105s, o que 
+expressa uma redução de ~38% em comparação com uma versão sequencial
+do mesmo carregamento.
 
 ## Rodando a demonstração
 
@@ -59,4 +59,4 @@ jupyter notebook notebooks/demo_registro_coordenadas.ipynb
 
 O notebook gera o volume sintético, simula uma nova aquisição rotacionada,
 aplica o registro de coordenadas e mostra visualmente a posição dos
-nódulos antes e depois — sem depender de nenhum dado externo.
+nódulos antes e depois, sem depender de nenhum dado externo.

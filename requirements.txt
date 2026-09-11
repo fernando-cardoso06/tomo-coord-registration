@@ -1,0 +1,4 @@
+numpy>=1.24
+pydicom>=2.4
+matplotlib>=3.7
+jupyter>=1.0
